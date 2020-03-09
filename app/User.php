@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -15,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'address1', 'address2', 'phone',
+        'name', 'email', 'password',
     ];
 
     /**
@@ -27,22 +28,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function orders()
-    {
-        return $this->hasMany('App\Models\ShopOrder', 'user_id', 'id');
-    }
-
-    public function orders_amount()
-    {
-        $amount = 0;
-        foreach ($this->orders as $key => $value) {
-            $amount += $value->total;
-        }
-        return $amount;
-    }
-
-    public function likes()
-    {
-        return $this->hasMany('App\Models\ShopProductLike', 'users_id', 'id');
-    }
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }
