@@ -16,13 +16,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('categorys/', 'CategoryControlle@index');
-Route::get('categorys/create', 'CategoryControlle@create');
-Route::post('categorys/store', 'CategoryControlle@store');
-//Route::resource('categorys', 'CategoryControlle', [
-//    'names' => [
-//        'index' => '/',
-//        'edit' => 'edit',
-//        'create' => 'create',
-//    ]
-//]);
+Route::get('categorys/', 'CategoryController@index');
+Route::get('categorys/create', 'CategoryController@create');
+Route::get('categorys/edit/{id}', 'CategoryController@edit');
+Route::post('categorys/store', 'CategoryController@store');
+Route::post('categorys/update/{id}', 'CategoryController@update');
+Route::delete('categorys/delete/{id}', 'CategoryController@destroy');
+
+Route::get('news/', 'NewsController@index');
+Route::get('news/create', 'NewsController@create');
+Route::get('news/edit/{id}', 'NewsController@edit');
+Route::post('news/store', 'NewsController@store');
+Route::post('news/update/{id}', 'NewsController@update');
+Route::delete('news/delete/{id}', 'NewsController@destroy');
+
+//Route::resource('categorys', 'CategoryController');

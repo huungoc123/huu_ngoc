@@ -29,19 +29,27 @@
         </div>
         <div role="main" id="content" class="content selfclear relative">
             <div class="lastUnit size1of1 header account">
-                <h1>Creat Category</h1>
+                <h1>Edit New</h1>
             </div>
             <div class="line section">
-                <form action="{{ action('CategoryController@store') }}" method="POST" novalidate="novalidate">
+                <form action="{{ action('NewsController@update', $new->id) }}" method="POST" novalidate="novalidate">
                     <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                     <div class="unit size1of2 !margin-bottom--lv6">
                         <fieldset>
                             <div id="basicinfo-fieldset">
+                                <div class="field-wrapper">
+                                    <label for="category" class="">Category</label>
+                                    <select  name="categorys_id" class=" av-text" id="category">
+                                        @foreach($categorys as $category)
+                                            <option value="{{$category->id}}" @if($new->categorys_id == $category->id)selected="selected" @endif>{{$category->title}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div id="username-fieldset">
                                     <div class="field-wrapper">
                                         <label for="title" class="">Title</label>
-                                        <input type="text" name="title" class=" av-text {{ $errors->has('title') ? ' is-invalid' : '' }}" value="" id="title">
-{{--                                        <div class="field-help">This is what you use to log in to Mailchimp. You can also enter your email if you wish.</div>--}}
+                                        <input type="text" name="title" class=" av-text {{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{$new->title}}" id="title">
+                                        {{--                                        <div class="field-help">This is what you use to log in to Mailchimp. You can also enter your email if you wish.</div>--}}
                                         @if ($errors->has('title'))
                                             <span class="invalid feedback"role="alert" style="color: red;font-size: 14px;">
                                                 <strong>{{ $errors->first('title') }}.</strong>
@@ -51,11 +59,11 @@
                                 </div>
                                 <div class="field-wrapper">
                                     <label for="description" class="">Description</label>
-                                    <input  type="text" name="description" class=" av-text" value="" id="description">
-{{--                                    <div class="field-help">Your email address will remain private.</div>--}}
+                                    <input  type="text" name="description" class=" av-text" value="{{$new->description}}" id="description">
+                                    {{--                                    <div class="field-help">Your email address will remain private.</div>--}}
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-submit" data-action="save"><i class="la la-save"></i>Save</button>
-                                <a href="{{ action('CategoryController@index') }}" class="cancel-button small-meta font-weight--bold">Cancel</a>
+                                <a href="{{ action('NewsController@index') }}" class="cancel-button small-meta font-weight--bold">Cancel</a>
                             </div>
                         </fieldset>
                     </div>
